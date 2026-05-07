@@ -1,0 +1,13 @@
+[package]
+name = "tree-sitter-rotom"
+version = "0.1.0"
+edition = "2024"
+license = "MIT OR Apache-2.0"
+description = "Tree-sitter grammar for the Rotom scripting language"
+repository = "https://github.com/KalaayPT/tree-sitter-rotom"
+
+[dependencies]
+tree-sitter-language = "0.1"
+
+[build-dependencies]
+cc = "1.1"

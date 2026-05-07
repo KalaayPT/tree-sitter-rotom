@@ -1,0 +1,40 @@
+{
+  "name": "tree-sitter-rotom",
+  "version": "0.1.0",
+  "description": "Tree-sitter grammar for the Rotom scripting language",
+  "type": "module",
+  "main": "bindings/node",
+  "types": "bindings/node",
+  "scripts": {
+    "test": "tree-sitter test",
+    "generate": "tree-sitter generate",
+    "parse": "tree-sitter parse"
+  },
+  "keywords": ["tree-sitter", "rotom", "pokemon", "parser"],
+  "license": "MIT",
+  "devDependencies": {
+    "tree-sitter-cli": "^0.24.0"
+  },
+  "dependencies": {
+    "node-addon-api": "^8.0.0",
+    "node-gyp-build": "^4.8.0"
+  },
+  "peerDependencies": {
+    "tree-sitter": "^0.21.0"
+  },
+  "peerDependenciesMeta": {
+    "tree_sitter": { "optional": true }
+  },
+  "files": [
+    "grammar.js", "binding.gyp", "prebuilds/**",
+    "bindings/node/*", "queries/*", "src/**"
+  ],
+  "tree-sitter": [
+    {
+      "scope": "source.rotom",
+      "injection-regex": "^rotom$",
+      "file-types": ["rotom"],
+      "highlights": ["queries/highlights.scm"]
+    }
+  ]
+}
