@@ -33,6 +33,7 @@
 ; Literals
 (number) @number
 (string) @string
+(escape_sequence) @escape
 (comment) @comment
 
 ; Variables / identifiers

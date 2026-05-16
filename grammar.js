@@ -211,7 +211,16 @@ export default grammar({
       $.parenthesized_expression,
     ),
 
-    string: $ => /"[^"]*"/,
+    string: $ => seq(
+      '"',
+      repeat(choice(
+        $.escape_sequence,
+        /[^"\\]+/,
+      )),
+      '"',
+    ),
+
+    escape_sequence: $ => /\\"/,
 
     prefix_expression: $ => prec.left(1, seq(
       choice('not', '!', '-'),

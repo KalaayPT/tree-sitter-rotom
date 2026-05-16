@@ -508,6 +508,21 @@
     }
   },
   {
+    "type": "string",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": false,
+      "types": [
+        {
+          "type": "escape_sequence",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
     "type": "while_statement",
     "named": true,
     "fields": {},
@@ -532,6 +547,10 @@
   },
   {
     "type": "!=",
+    "named": false
+  },
+  {
+    "type": "\"",
     "named": false
   },
   {
@@ -652,6 +671,10 @@
     "named": false
   },
   {
+    "type": "escape_sequence",
+    "named": true
+  },
+  {
     "type": "false",
     "named": false
   },
@@ -690,10 +713,6 @@
   {
     "type": "script",
     "named": false
-  },
-  {
-    "type": "string",
-    "named": true
   },
   {
     "type": "then",
