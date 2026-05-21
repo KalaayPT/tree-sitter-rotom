@@ -21,24 +21,11 @@
 ; Boolean literals
 (boolean) @boolean
 
-; Definitions
-(function_header (identifier) @function)
-(action_definition (identifier) @function)
-(label_definition (identifier) @function)
-(local_label_definition (local_label) @function)
-
-; Command invocations
-(command_statement (identifier) @function.call)
-
 ; Literals
 (number) @number
 (string) @string
 (escape_sequence) @escape
 (comment) @comment
-
-; Variables / identifiers
-(identifier) @variable
-(local_label) @variable
 
 ; Operators — "not" is also a prefix keyword but classified as operator here
 [
@@ -50,3 +37,47 @@
 
 ; Preprocessor
 (preprocessor_directive) @preproc
+
+; Expression identifiers — variable first, ALL_CAPS constants override (last wins)
+(expression (identifier) @variable)
+
+(expression
+  (identifier) @constant
+  (#match? @constant "^[A-Z][A-Z0-9_]*$"))
+
+; Alias target: `alias expr as Name`
+(alias_statement
+  "as"
+  (identifier) @variable)
+
+; Definition names — @type is teal in Zed/VS Code (do not use @label here)
+(function_header
+  "script"
+  (identifier) @type)
+
+(action_definition
+  "action"
+  (identifier) @type)
+
+(label_definition
+  (identifier) @type)
+
+(local_label_definition
+  (local_label) @type)
+
+; Jump targets — same @type as label/script references
+(jump_statement
+  "Jump"
+  (identifier) @type)
+
+(jump_statement
+  "Jump"
+  (local_label) @type)
+
+; Command invocations — anchor `.` selects the command name only; Zed resolves
+; @function.call then falls back to @function (right-to-left on the same node)
+(command_statement
+  (identifier) @function @function.call . (#set! priority 100))
+
+(movement_statement
+  (identifier) @function @function.call . (#set! priority 100))
