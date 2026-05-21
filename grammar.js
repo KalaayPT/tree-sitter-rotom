@@ -11,8 +11,10 @@
 export default grammar({
   name: 'rotom',
 
+  // Newlines terminate statements. If newlines are extras, `LockAll\nFadeScreenIn`
+  // parses as one command with an argument instead of two commands.
   extras: $ => [
-    /\s/,
+    /[ \t]+/,
     $.comment,
   ],
 
@@ -23,10 +25,14 @@ export default grammar({
     [$.label_definition],
     [$.command_statement],
     [$.movement_statement],
+    [$.function_header, $.command_statement],
   ],
 
   rules: {
-    source_file: $ => repeat($._top_level_item),
+    source_file: $ => repeat(choice(
+      $._top_level_item,
+      /\r?\n/,
+    )),
 
     _top_level_item: $ => choice(
       $.alias_statement,
@@ -36,7 +42,6 @@ export default grammar({
       $.preprocessor_directive,
     ),
 
-    // Comments
     comment: $ => token(choice(
       seq('//', /.*/),
       seq('/*', /[^*]*\*+([^/*][^*]*\*+)*/, '/'),
@@ -56,15 +61,16 @@ export default grammar({
       $.expression,
       'as',
       $.identifier,
+      /\r?\n/,
     ),
 
     function_definition: $ => seq(
-      repeat1($.function_header),
+      $.function_header,
+      /\r?\n/,
+      repeat(seq($.function_header, /\r?\n/)),
       repeat($.statement),
     ),
 
-    // `script Name #N:` — all three parts are required; the compiler always
-    // requires the jump-table slot number.
     function_header: $ => seq(
       'script',
       field('name', $.identifier),
@@ -76,21 +82,23 @@ export default grammar({
     action_definition: $ => seq(
       'action',
       field('name', $.identifier),
+      optional(':'),
+      /\r?\n/,
       repeat($.movement_statement),
       'EndMovement',
+      /\r?\n/,
     ),
 
     movement_statement: $ => seq(
       field('command', $.identifier),
       optional($.expression),
+      /\r?\n/,
     ),
 
-    // Bare top-level label: `LabelName:` followed by body (private helper,
-    // no jump-table entry). Only identifier names are valid here; local
-    // labels (.name) only appear as statements inside a function body.
     label_definition: $ => seq(
       field('name', $.identifier),
       ':',
+      /\r?\n/,
       repeat($.statement),
     ),
 
@@ -109,23 +117,21 @@ export default grammar({
       $.local_label_definition,
     ),
 
-    command_statement: $ => seq(
+    command_statement: $ => prec.right(1, seq(
       field('name', $.identifier),
       optional(choice(
         $.argument_list,
         $.call_argument_list,
       )),
-    ),
+      /\r?\n/,
+    )),
 
-    // Space-separated args: `CommandName arg1, arg2`
+    // Comma-separated args on the same line: `CommandName arg1, arg2`
     argument_list: $ => seq(
       $.expression,
       repeat(seq(',', $.expression)),
     ),
 
-    // Call-style args: `CommandName(arg1, arg2)`. Precedence over
-    // parenthesized_expression: when `(` follows a command name, it always
-    // starts a call-style arg list, never a parenthesized expression arg.
     call_argument_list: $ => prec(1, seq(
       '(',
       optional(seq($.expression, repeat(seq(',', $.expression)))),
@@ -136,13 +142,16 @@ export default grammar({
       'if',
       $.expression,
       'then',
+      /\r?\n/,
       repeat($.statement),
       optional($.else_clause),
       'endif',
+      /\r?\n/,
     ),
 
     else_clause: $ => seq(
       'else',
+      /\r?\n/,
       repeat($.statement),
     ),
 
@@ -150,55 +159,62 @@ export default grammar({
       'while',
       $.expression,
       'do',
+      /\r?\n/,
       repeat($.statement),
       'endwhile',
+      /\r?\n/,
     ),
 
     match_statement: $ => seq(
       'match',
       $.expression,
       'with',
+      /\r?\n/,
       repeat($.match_case),
       optional($.match_default),
       'endmatch',
+      /\r?\n/,
     ),
 
-    // `case` accepts one or more comma-separated values before the colon.
     match_case: $ => seq(
       'case',
       $.expression,
       repeat(seq(',', $.expression)),
       ':',
+      /\r?\n/,
       repeat($.statement),
     ),
 
     match_default: $ => seq(
       'else',
       ':',
+      /\r?\n/,
       repeat($.statement),
     ),
 
     jump_statement: $ => seq(
       'Jump',
       choice($.identifier, $.local_label),
+      /\r?\n/,
     ),
 
-    break_statement: $ => 'break',
+    break_statement: $ => seq('break', /\r?\n/),
 
-    return_statement: $ => 'Return',
+    return_statement: $ => seq('Return', /\r?\n/),
 
-    end_statement: $ => 'End',
+    end_statement: $ => seq('End', /\r?\n/),
 
-    // Local label as a statement inside a function body: `.name:`
     local_label_definition: $ => seq(
       $.local_label,
       ':',
+      /\r?\n/,
     ),
 
     preprocessor_directive: $ => seq(
       '#',
       choice('include', 'define'),
       /[^\n]*/,
+      /\r?\n/,
     ),
 
     expression: $ => choice(

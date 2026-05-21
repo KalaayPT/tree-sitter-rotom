@@ -65,6 +65,11 @@
     "fields": {}
   },
   {
+    "type": "break_statement",
+    "named": true,
+    "fields": {}
+  },
+  {
     "type": "call_argument_list",
     "named": true,
     "fields": {},
@@ -123,6 +128,11 @@
         }
       ]
     }
+  },
+  {
+    "type": "end_statement",
+    "named": true,
+    "fields": {}
   },
   {
     "type": "expression",
@@ -425,6 +435,11 @@
     "fields": {}
   },
   {
+    "type": "return_statement",
+    "named": true,
+    "fields": {}
+  },
+  {
     "type": "source_file",
     "named": true,
     "root": true,
@@ -610,11 +625,19 @@
     "named": false
   },
   {
+    "type": "End",
+    "named": false
+  },
+  {
     "type": "EndMovement",
     "named": false
   },
   {
     "type": "Jump",
+    "named": false
+  },
+  {
+    "type": "Return",
     "named": false
   },
   {
@@ -630,8 +653,8 @@
     "named": false
   },
   {
-    "type": "break_statement",
-    "named": true
+    "type": "break",
+    "named": false
   },
   {
     "type": "case",
@@ -653,10 +676,6 @@
   {
     "type": "else",
     "named": false
-  },
-  {
-    "type": "end_statement",
-    "named": true
   },
   {
     "type": "endif",
@@ -704,10 +723,6 @@
   },
   {
     "type": "number",
-    "named": true
-  },
-  {
-    "type": "return_statement",
     "named": true
   },
   {

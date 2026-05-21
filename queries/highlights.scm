@@ -51,33 +51,20 @@
   (identifier) @variable)
 
 ; Definition names — @type is teal in Zed/VS Code (do not use @label here)
-(function_header
-  "script"
-  (identifier) @type)
+(function_header name: (identifier) @type)
 
-(action_definition
-  "action"
-  (identifier) @type)
+(action_definition name: (identifier) @type)
 
-(label_definition
-  (identifier) @type)
+(label_definition name: (identifier) @type)
 
-(local_label_definition
-  (local_label) @type)
+(local_label_definition (local_label) @type)
 
 ; Jump targets — same @type as label/script references
-(jump_statement
-  "Jump"
-  (identifier) @type)
+(jump_statement "Jump" (identifier) @type)
 
-(jump_statement
-  "Jump"
-  (local_label) @type)
+(jump_statement "Jump" (local_label) @type)
 
-; Command invocations — anchor `.` selects the command name only; Zed resolves
-; @function.call then falls back to @function (right-to-left on the same node)
-(command_statement
-  (identifier) @function @function.call . (#set! priority 100))
+; Command invocations — Zed resolves @function.call then falls back to @function
+(command_statement name: (identifier) @function @function.call)
 
-(movement_statement
-  (identifier) @function @function.call . (#set! priority 100))
+(movement_statement command: (identifier) @function @function.call)
