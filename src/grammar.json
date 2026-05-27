@@ -955,6 +955,14 @@
               },
               {
                 "type": "STRING",
+                "value": "and"
+              },
+              {
+                "type": "STRING",
+                "value": "or"
+              },
+              {
+                "type": "STRING",
                 "value": "+"
               },
               {

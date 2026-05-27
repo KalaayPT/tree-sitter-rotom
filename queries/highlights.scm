@@ -1,4 +1,4 @@
-; Rotom syntax highlighting (bundled in extension; overrides fetched grammar queries)
+; Rotom syntax highlighting (bundled in Zed extension)
 
 [
   "if" "then" "else" "endif"
@@ -22,7 +22,7 @@
 (comment) @comment
 
 [
-  "==" "!=" "<=" ">=" "<" ">" "&&" "||"
+  "==" "!=" "<=" ">=" "<" ">" "&&" "||" "and" "or"
   "+" "-" "*"
   "!" "not"
   "(" ")" "," "#" ":"

@@ -649,6 +649,10 @@
     "named": false
   },
   {
+    "type": "and",
+    "named": false
+  },
+  {
     "type": "as",
     "named": false
   },
@@ -724,6 +728,10 @@
   {
     "type": "number",
     "named": true
+  },
+  {
+    "type": "or",
+    "named": false
   },
   {
     "type": "script",

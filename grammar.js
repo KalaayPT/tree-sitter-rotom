@@ -245,7 +245,7 @@ export default grammar({
 
     infix_expression: $ => prec.left(1, seq(
       $.expression,
-      choice('==', '!=', '<=', '>=', '<', '>', '&&', '||', '+', '-', '*'),
+      choice('==', '!=', '<=', '>=', '<', '>', '&&', '||', 'and', 'or', '+', '-', '*'),
       $.expression,
     )),
 
