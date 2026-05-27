@@ -218,6 +218,7 @@ export default grammar({
     ),
 
     expression: $ => choice(
+      $.call_expression,
       $.identifier,
       $.number,
       $.boolean,
@@ -226,6 +227,13 @@ export default grammar({
       $.infix_expression,
       $.parenthesized_expression,
     ),
+
+    call_expression: $ => prec(2, seq(
+      field('function', $.identifier),
+      '(',
+      optional(seq($.expression, repeat(seq(',', $.expression)))),
+      ')',
+    )),
 
     string: $ => seq(
       '"',
