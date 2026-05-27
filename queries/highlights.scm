@@ -46,3 +46,4 @@
 
 (command_statement name: (identifier) @function.call)
 (movement_statement command: (identifier) @function.call)
+(call_expression function: (identifier) @function.call)
