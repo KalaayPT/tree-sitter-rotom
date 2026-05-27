@@ -42,6 +42,10 @@ export default grammar({
       $.preprocessor_directive,
     ),
 
+    _statement_or_blank: $ => choice($.statement, /\r?\n/),
+
+    _movement_or_blank: $ => choice($.movement_statement, /\r?\n/),
+
     comment: $ => token(choice(
       seq('//', /.*/),
       seq('/*', /[^*]*\*+([^/*][^*]*\*+)*/, '/'),
@@ -68,7 +72,7 @@ export default grammar({
       $.function_header,
       /\r?\n/,
       repeat(seq($.function_header, /\r?\n/)),
-      repeat($.statement),
+      repeat($._statement_or_blank),
     ),
 
     function_header: $ => seq(
@@ -84,7 +88,7 @@ export default grammar({
       field('name', $.identifier),
       optional(':'),
       /\r?\n/,
-      repeat($.movement_statement),
+      repeat($._movement_or_blank),
       'EndMovement',
       /\r?\n/,
     ),
@@ -99,7 +103,7 @@ export default grammar({
       field('name', $.identifier),
       ':',
       /\r?\n/,
-      repeat($.statement),
+      repeat($._statement_or_blank),
     ),
 
     local_label: $ => /\.[A-Za-z_][A-Za-z0-9_]*/,
@@ -143,7 +147,7 @@ export default grammar({
       $.expression,
       'then',
       /\r?\n/,
-      repeat($.statement),
+      repeat($._statement_or_blank),
       optional($.else_clause),
       'endif',
       /\r?\n/,
@@ -152,7 +156,7 @@ export default grammar({
     else_clause: $ => seq(
       'else',
       /\r?\n/,
-      repeat($.statement),
+      repeat($._statement_or_blank),
     ),
 
     while_statement: $ => seq(
@@ -160,7 +164,7 @@ export default grammar({
       $.expression,
       'do',
       /\r?\n/,
-      repeat($.statement),
+      repeat($._statement_or_blank),
       'endwhile',
       /\r?\n/,
     ),
@@ -182,14 +186,14 @@ export default grammar({
       repeat(seq(',', $.expression)),
       ':',
       /\r?\n/,
-      repeat($.statement),
+      repeat($._statement_or_blank),
     ),
 
     match_default: $ => seq(
       'else',
       ':',
       /\r?\n/,
-      repeat($.statement),
+      repeat($._statement_or_blank),
     ),
 
     jump_statement: $ => seq(

@@ -1,0 +1,54 @@
+==================
+Blank lines in function body
+==================
+
+script test #0:
+    while VAR_COUNTER < 10 do
+        AddVar VAR_COUNTER, 1
+    endwhile
+
+    Message format("test")
+    SetPlayerState(PLAYER_TRANSITION_HEALING)
+    ChangePlayerState
+
+---
+
+(source_file
+  (function_definition
+    (function_header
+      name: (identifier)
+      slot: (number))
+    (statement
+      (while_statement
+        (expression
+          (infix_expression
+            (expression
+              (identifier))
+            (expression
+              (number))))
+        (statement
+          (command_statement
+            name: (identifier)
+            (argument_list
+              (expression
+                (identifier))
+              (expression
+                (number)))))))
+    (statement
+      (command_statement
+        name: (identifier)
+        (argument_list
+          (expression
+            (call_expression
+              function: (identifier)
+              (expression
+                (string)))))))
+    (statement
+      (command_statement
+        name: (identifier)
+        (call_argument_list
+          (expression
+            (identifier)))))
+    (statement
+      (command_statement
+        name: (identifier)))))

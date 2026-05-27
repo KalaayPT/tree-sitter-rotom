@@ -44,6 +44,32 @@
         }
       ]
     },
+    "_statement_or_blank": {
+      "type": "CHOICE",
+      "members": [
+        {
+          "type": "SYMBOL",
+          "name": "statement"
+        },
+        {
+          "type": "PATTERN",
+          "value": "\\r?\\n"
+        }
+      ]
+    },
+    "_movement_or_blank": {
+      "type": "CHOICE",
+      "members": [
+        {
+          "type": "SYMBOL",
+          "name": "movement_statement"
+        },
+        {
+          "type": "PATTERN",
+          "value": "\\r?\\n"
+        }
+      ]
+    },
     "comment": {
       "type": "TOKEN",
       "content": {
@@ -171,7 +197,7 @@
           "type": "REPEAT",
           "content": {
             "type": "SYMBOL",
-            "name": "statement"
+            "name": "_statement_or_blank"
           }
         }
       ]
@@ -244,7 +270,7 @@
           "type": "REPEAT",
           "content": {
             "type": "SYMBOL",
-            "name": "movement_statement"
+            "name": "_movement_or_blank"
           }
         },
         {
@@ -309,7 +335,7 @@
           "type": "REPEAT",
           "content": {
             "type": "SYMBOL",
-            "name": "statement"
+            "name": "_statement_or_blank"
           }
         }
       ]
@@ -503,7 +529,7 @@
           "type": "REPEAT",
           "content": {
             "type": "SYMBOL",
-            "name": "statement"
+            "name": "_statement_or_blank"
           }
         },
         {
@@ -543,7 +569,7 @@
           "type": "REPEAT",
           "content": {
             "type": "SYMBOL",
-            "name": "statement"
+            "name": "_statement_or_blank"
           }
         }
       ]
@@ -571,7 +597,7 @@
           "type": "REPEAT",
           "content": {
             "type": "SYMBOL",
-            "name": "statement"
+            "name": "_statement_or_blank"
           }
         },
         {
@@ -671,7 +697,7 @@
           "type": "REPEAT",
           "content": {
             "type": "SYMBOL",
-            "name": "statement"
+            "name": "_statement_or_blank"
           }
         }
       ]
@@ -695,7 +721,7 @@
           "type": "REPEAT",
           "content": {
             "type": "SYMBOL",
-            "name": "statement"
+            "name": "_statement_or_blank"
           }
         }
       ]
