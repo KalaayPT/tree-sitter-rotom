@@ -149,6 +149,14 @@
       "required": false,
       "types": [
         {
+          "type": "else_clause",
+          "named": true
+        },
+        {
+          "type": "expression",
+          "named": true
+        },
+        {
           "type": "statement",
           "named": true
         }

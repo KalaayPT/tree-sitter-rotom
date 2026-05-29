@@ -52,3 +52,78 @@ script test #0:
     (statement
       (command_statement
         name: (identifier)))))
+
+==================
+Same-line else if
+==================
+
+script test #0:
+    if VAR_RESULT == 1 then
+        Message 1
+    else if VAR_RESULT == 2 then
+        Message 2
+    else
+        Message 0
+    endif
+    End
+
+---
+
+(source_file
+  (function_definition
+    (function_header
+      name: (identifier)
+      slot: (number))
+    (statement
+      (if_statement
+        (expression
+          (infix_expression
+            (expression
+              (identifier))
+            (expression
+              (number))))
+        (statement
+          (command_statement
+            name: (identifier)
+            (argument_list
+              (expression
+                (number)))))
+        (else_clause
+          (expression
+            (infix_expression
+              (expression
+                (identifier))
+              (expression
+                (number))))
+          (statement
+            (command_statement
+              name: (identifier)
+              (argument_list
+                (expression
+                  (number)))))
+          (else_clause
+            (statement
+              (command_statement
+                name: (identifier)
+                (argument_list
+                  (expression
+                    (number)))))))))
+    (statement
+      (end_statement))))
+
+==================
+Action missing colon is invalid
+==================
+
+action WalkPattern
+    WalkRight 3
+EndMovement
+
+---
+
+(source_file
+  (ERROR
+    (ERROR
+      (identifier))
+    (identifier)
+    (number)))

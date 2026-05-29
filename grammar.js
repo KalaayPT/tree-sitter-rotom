@@ -86,7 +86,7 @@ export default grammar({
     action_definition: $ => seq(
       'action',
       field('name', $.identifier),
-      optional(':'),
+      ':',
       /\r?\n/,
       repeat($._movement_or_blank),
       'EndMovement',
@@ -155,8 +155,10 @@ export default grammar({
 
     else_clause: $ => seq(
       'else',
-      /\r?\n/,
-      repeat($._statement_or_blank),
+      choice(
+        seq(/\r?\n/, repeat($._statement_or_blank)),
+        seq('if', $.expression, 'then', /\r?\n/, repeat($._statement_or_blank), optional($.else_clause)),
+      ),
     ),
 
     while_statement: $ => seq(
