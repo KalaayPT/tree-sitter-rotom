@@ -17,7 +17,7 @@ script test #0:
   (function_definition
     (function_header
       name: (identifier)
-      slot: (number))
+      slots: (slot_id))
     (statement
       (while_statement
         (expression
@@ -73,7 +73,7 @@ script test #0:
   (function_definition
     (function_header
       name: (identifier)
-      slot: (number))
+      slots: (slot_id))
     (statement
       (if_statement
         (expression

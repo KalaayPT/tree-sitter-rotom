@@ -1,0 +1,121 @@
+==================
+Bare slot id
+==================
+
+script Main #1:
+    End
+
+---
+
+(source_file
+  (function_definition
+    (function_header
+      name: (identifier)
+      slots: (slot_id))
+    (statement
+      (end_statement))))
+
+==================
+Bracketed single slot
+==================
+
+script Main #[1]:
+    End
+
+---
+
+(source_file
+  (function_definition
+    (function_header
+      name: (identifier)
+      slots: (slot_list
+        (slot_entry
+          (slot_id))))
+    (statement
+      (end_statement))))
+
+==================
+Bracketed slot list
+==================
+
+script Main #[1, 3, 5]:
+    End
+
+---
+
+(source_file
+  (function_definition
+    (function_header
+      name: (identifier)
+      slots: (slot_list
+        (slot_entry
+          (slot_id))
+        (slot_entry
+          (slot_id))
+        (slot_entry
+          (slot_id))))
+    (statement
+      (end_statement))))
+
+==================
+Slot range
+==================
+
+script Main #[1-3]:
+    End
+
+---
+
+(source_file
+  (function_definition
+    (function_header
+      name: (identifier)
+      slots: (slot_list
+        (slot_entry
+          from: (slot_id)
+          to: (slot_id))))
+    (statement
+      (end_statement))))
+
+==================
+Mixed ranges and singles
+==================
+
+script Main #[1-3, 5]:
+    End
+
+---
+
+(source_file
+  (function_definition
+    (function_header
+      name: (identifier)
+      slots: (slot_list
+        (slot_entry
+          from: (slot_id)
+          to: (slot_id))
+        (slot_entry
+          (slot_id))))
+    (statement
+      (end_statement))))
+
+==================
+Stacked headers
+==================
+
+script Main #1:
+script Main #2:
+    End
+
+---
+
+(source_file
+  (function_definition
+    (function_header
+      name: (identifier)
+      slots: (slot_id))
+    (function_header
+      name: (identifier)
+      slots: (slot_id))
+    (statement
+      (end_statement))))

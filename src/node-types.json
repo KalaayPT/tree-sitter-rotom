@@ -244,12 +244,16 @@
           }
         ]
       },
-      "slot": {
+      "slots": {
         "multiple": false,
         "required": true,
         "types": [
           {
-            "type": "number",
+            "type": "slot_id",
+            "named": true
+          },
+          {
+            "type": "slot_list",
             "named": true
           }
         ]
@@ -478,6 +482,57 @@
     "fields": {}
   },
   {
+    "type": "slot_entry",
+    "named": true,
+    "fields": {
+      "from": {
+        "multiple": false,
+        "required": false,
+        "types": [
+          {
+            "type": "slot_id",
+            "named": true
+          }
+        ]
+      },
+      "to": {
+        "multiple": false,
+        "required": false,
+        "types": [
+          {
+            "type": "slot_id",
+            "named": true
+          }
+        ]
+      }
+    },
+    "children": {
+      "multiple": false,
+      "required": false,
+      "types": [
+        {
+          "type": "slot_id",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "slot_list",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": true,
+      "types": [
+        {
+          "type": "slot_entry",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
     "type": "source_file",
     "named": true,
     "root": true,
@@ -679,6 +734,14 @@
     "named": false
   },
   {
+    "type": "[",
+    "named": false
+  },
+  {
+    "type": "]",
+    "named": false
+  },
+  {
     "type": "action",
     "named": false
   },
@@ -774,6 +837,10 @@
   {
     "type": "script",
     "named": false
+  },
+  {
+    "type": "slot_id",
+    "named": true
   },
   {
     "type": "then",

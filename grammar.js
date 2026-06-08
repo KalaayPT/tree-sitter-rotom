@@ -79,9 +79,23 @@ export default grammar({
       'script',
       field('name', $.identifier),
       '#',
-      field('slot', $.number),
+      field('slots', choice($.slot_list, $.slot_id)),
       ':',
     ),
+
+    slot_list: $ => seq(
+      '[',
+      $.slot_entry,
+      repeat(seq(',', $.slot_entry)),
+      ']',
+    ),
+
+    slot_entry: $ => choice(
+      seq(field('from', $.slot_id), '-', field('to', $.slot_id)),
+      $.slot_id,
+    ),
+
+    slot_id: $ => /[0-9]+/,
 
     action_definition: $ => seq(
       'action',

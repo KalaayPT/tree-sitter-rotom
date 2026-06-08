@@ -223,10 +223,19 @@
         },
         {
           "type": "FIELD",
-          "name": "slot",
+          "name": "slots",
           "content": {
-            "type": "SYMBOL",
-            "name": "number"
+            "type": "CHOICE",
+            "members": [
+              {
+                "type": "SYMBOL",
+                "name": "slot_list"
+              },
+              {
+                "type": "SYMBOL",
+                "name": "slot_id"
+              }
+            ]
           }
         },
         {
@@ -234,6 +243,77 @@
           "value": ":"
         }
       ]
+    },
+    "slot_list": {
+      "type": "SEQ",
+      "members": [
+        {
+          "type": "STRING",
+          "value": "["
+        },
+        {
+          "type": "SYMBOL",
+          "name": "slot_entry"
+        },
+        {
+          "type": "REPEAT",
+          "content": {
+            "type": "SEQ",
+            "members": [
+              {
+                "type": "STRING",
+                "value": ","
+              },
+              {
+                "type": "SYMBOL",
+                "name": "slot_entry"
+              }
+            ]
+          }
+        },
+        {
+          "type": "STRING",
+          "value": "]"
+        }
+      ]
+    },
+    "slot_entry": {
+      "type": "CHOICE",
+      "members": [
+        {
+          "type": "SEQ",
+          "members": [
+            {
+              "type": "FIELD",
+              "name": "from",
+              "content": {
+                "type": "SYMBOL",
+                "name": "slot_id"
+              }
+            },
+            {
+              "type": "STRING",
+              "value": "-"
+            },
+            {
+              "type": "FIELD",
+              "name": "to",
+              "content": {
+                "type": "SYMBOL",
+                "name": "slot_id"
+              }
+            }
+          ]
+        },
+        {
+          "type": "SYMBOL",
+          "name": "slot_id"
+        }
+      ]
+    },
+    "slot_id": {
+      "type": "PATTERN",
+      "value": "[0-9]+"
     },
     "action_definition": {
       "type": "SEQ",
